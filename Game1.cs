@@ -65,11 +65,12 @@ namespace Michael_Jackson_s_Moonwalker
             MJ.HSpeed = 0;
             MJ.VSpeed = 0;
             if (keyboardState.IsKeyDown(Keys.D))
-                MJ.HSpeed = 3;
+
+                ClubRect.X += MJSpeed;
             else if (keyboardState.IsKeyDown(Keys.A))
-                MJ.HSpeed = -3;
-            
-            
+                ClubRect.X -= MJSpeed;
+
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             MJ.Update();
