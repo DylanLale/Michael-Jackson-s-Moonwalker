@@ -15,7 +15,7 @@ namespace Player_Class
         public Player(Texture2D texture, int x, int y)
         {
             _texture = texture;
-            _location = new Rectangle(x, y, 30, 30);
+            _location = new Rectangle(x, y, 52, 118);
             _speed = new Vector2();
         }
 
@@ -54,20 +54,11 @@ namespace Player_Class
             Move();
         }
 
-        public bool Collide(Rectangle item)
-        {
-            return _location.Intersects(item);
-        }
-
         public Boolean Contains(Rectangle item)
         {
             return _location.Contains(item);
         }
 
-        public void Grow()
-        {
-            _location.Width += 10;
-            _location.Height += 10;
-        }
+        
     }
 }
