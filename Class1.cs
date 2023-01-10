@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,15 +9,19 @@ namespace Player_Class
 {
     class Player
     {
-        private Texture2D _texture;
+        private Texture2D _leftTexture;
+        private Texture2D _rightTexture;
         private Rectangle _location;
         private Vector2 _speed;
+        private int _prevSpeed;
 
         public Player(Texture2D texture, int x, int y)
         {
-            _texture = texture;
+            _leftTexture = texture;
+            _rightTexture = texture;
             _location = new Rectangle(x, y, 52, 118);
             _speed = new Vector2();
+            _prevSpeed = 1;
         }
 
         public float HSpeed
@@ -34,10 +39,13 @@ namespace Player_Class
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_texture, _location, Color.White);
+            if (_prevSpeed < 0)
+                spriteBatch.Draw(_leftTexture, _location, Color.White);
+            else
+            spriteBatch.Draw(_rightTexture, _location, Color.White);
         }
 
-        private void Move()
+        private void Move(KeyboardState keyboardState)
         {
             _location.X += (int)_speed.X;
             _location.Y += (int)_speed.Y;
@@ -49,9 +57,14 @@ namespace Player_Class
             _location.Y -= (int)_speed.Y;
         }
 
-        public void Update()
+        public void Update(KeyboardState keyboardState)
         {
-            Move();
+            if (_speed.X < 0)
+                _prevSpeed = -1;
+            else if (_speed.X > 0)
+                _prevSpeed = 1;
+
+            Move(keyboardState);
         }
 
         public Boolean Contains(Rectangle item)
