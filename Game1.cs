@@ -90,7 +90,7 @@ namespace Michael_Jackson_s_Moonwalker
 
 
             base.Initialize();
-            MJ = new Player(MJWalkLeft, MJWalkRight, 52, 300);
+            MJ = new Player(MJWalkLeft, MJWalkRight, MJkick, 52, 300);
 
         }
 
@@ -153,23 +153,23 @@ namespace Michael_Jackson_s_Moonwalker
                 {
                     MJTexture = MJkick;
 
-                    if (EnemyRect.X + 5 <= MJ.X)
+                    if (EnemyRect.X + 5 <= MJRect.X)
                     {
                         EnemyTexture = DeadEnemy;
 
                     }
 
-                    if (EnemyRect.X - 5 <= MJ.X)
+                    if (EnemyRect.X - 5 <= MJRect.X)
                     {
                         EnemyTexture = DeadEnemy;
 
                     }
-                    if (EnemyRect.X + 5 <= MJ.X)
+                    if (EnemyRect.X + 5 <= MJRect.X)
                     {
                         EnemyTexture = EnemyPunch;
                     }
 
-                    if (EnemyRect.X - 5 <= MJ.X)
+                    if (EnemyRect.X - 5 <= MJRect.X)
                     {
                         EnemyTexture = EnemyPunch;
                         Lives--;
@@ -208,7 +208,7 @@ namespace Michael_Jackson_s_Moonwalker
             }
             else if (screen == Screen.Screen2)
             {
-                MJRect.X = 750;
+               
                 _spriteBatch.Draw(Screen2, ClubRect, Color.White);
                 _spriteBatch.Draw(EnemyTexture, EnemyRect, Color.White);
                 MJ.Draw(_spriteBatch);

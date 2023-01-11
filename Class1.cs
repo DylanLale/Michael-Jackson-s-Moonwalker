@@ -11,14 +11,16 @@ namespace Player_Class
     {
         private Texture2D _leftTexture;
         private Texture2D _rightTexture;
-        private Texture2D _currentTexture;   
+        private Texture2D _currentTexture;
+        private Texture2D _attackTexture;
         private Rectangle _location;
         private Vector2 _speed;
 
-        public Player(Texture2D textureLeft, Texture2D textureRight, Texture2D TEXTUREATTACK int x, int y)
+        public Player(Texture2D textureLeft, Texture2D textureRight, Texture2D TextureAttack, int x, int y)
         {
             _leftTexture = textureLeft;
             _rightTexture = textureRight;
+            _attackTexture = TextureAttack;
             _currentTexture = textureRight;
             _location = new Rectangle(x, y, 52, 118);
             _speed = new Vector2();
@@ -73,6 +75,12 @@ namespace Player_Class
             {
                 _currentTexture = _leftTexture;
                 _speed.X =  -3;
+
+            }
+
+            else if (keyboardState.IsKeyDown(Keys.E))
+            {
+                _currentTexture = _attackTexture;
 
             }
 
