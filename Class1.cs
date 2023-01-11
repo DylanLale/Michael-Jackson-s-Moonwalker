@@ -11,17 +11,18 @@ namespace Player_Class
     {
         private Texture2D _leftTexture;
         private Texture2D _rightTexture;
+        private Texture2D _currentTexture;   
         private Rectangle _location;
         private Vector2 _speed;
-        private int _prevSpeed;
 
-        public Player(Texture2D texture, int x, int y)
+        public Player(Texture2D textureLeft, Texture2D textureRight, Texture2D TEXTUREATTACK int x, int y)
         {
-            _leftTexture = texture;
-            _rightTexture = texture;
+            _leftTexture = textureLeft;
+            _rightTexture = textureRight;
+            _currentTexture = textureRight;
             _location = new Rectangle(x, y, 52, 118);
             _speed = new Vector2();
-            _prevSpeed = 1;
+           
         }
 
         public float HSpeed
@@ -39,14 +40,15 @@ namespace Player_Class
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (_prevSpeed < 0)
-                spriteBatch.Draw(_leftTexture, _location, Color.White);
-            else
-            spriteBatch.Draw(_rightTexture, _location, Color.White);
+            
+            spriteBatch.Draw(_currentTexture, _location, Color.White);
         }
 
         private void Move(KeyboardState keyboardState)
         {
+
+
+
             _location.X += (int)_speed.X;
             _location.Y += (int)_speed.Y;
         }
@@ -59,12 +61,25 @@ namespace Player_Class
 
         public void Update(KeyboardState keyboardState)
         {
-            if (_speed.X < 0)
-                _prevSpeed = -1;
-            else if (_speed.X > 0)
-                _prevSpeed = 1;
+           
 
-            Move(keyboardState);
+            if (keyboardState.IsKeyDown(Keys.D))
+            {
+                _currentTexture = _rightTexture;
+                _speed.X = 3;
+            }
+
+            else if (keyboardState.IsKeyDown(Keys.A))
+            {
+                _currentTexture = _leftTexture;
+                _speed.X =  -3;
+
+            }
+
+            
+
+
+                Move(keyboardState);
         }
 
         public Boolean Contains(Rectangle item)

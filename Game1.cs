@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Player_Class;
+using System;
+using System.Runtime.CompilerServices;
 
 namespace Michael_Jackson_s_Moonwalker
 {
@@ -32,8 +34,12 @@ namespace Michael_Jackson_s_Moonwalker
         Texture2D TitleScreen;
         Rectangle TitleRect;
         Texture2D MJTexture;
+        Texture2D EnemyTexture;
         Texture2D MJkick;
         Texture2D MJArm;
+        Texture2D Enemy;
+        Texture2D DeadEnemy;
+        Texture2D EnemyPunch;
         Texture2D Screen1;
         Texture2D Screen2;
         Texture2D Screen3;
@@ -49,13 +55,16 @@ namespace Michael_Jackson_s_Moonwalker
         Texture2D MJWalkRight;
         Texture2D MJWalkLeft;
         Texture2D MJWalkLeft2;
-
+        int Lives = 3;
         Texture2D MJWalk2;
         Rectangle ClubRect;
+        Rectangle EnemyRect;
+        Rectangle DeadEnemyRect;
         KeyboardState keyboardState;
         SoundEffect MJMusic;
         Rectangle MJRect;
         bool songplayed;
+        Random generator = new Random();
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
@@ -72,6 +81,8 @@ namespace Michael_Jackson_s_Moonwalker
             screen = Screen.Intro;
             _graphics.PreferredBackBufferWidth = 800;
             _graphics.PreferredBackBufferHeight = 500;
+            EnemyRect = new Rectangle(generator.Next(100, 500), 50, 48, 100);
+            DeadEnemyRect = new Rectangle(EnemyRect.X, 50, 118, 34);
             TitleRect = new Rectangle(0, 0, 800, 500);
             ClubRect = new Rectangle(0, 0, 800, 500);
             MJRect = new Rectangle(750, 50, 48, 100);
@@ -79,7 +90,7 @@ namespace Michael_Jackson_s_Moonwalker
 
 
             base.Initialize();
-            MJ = new Player(MJWalkRight, 118, 52);
+            MJ = new Player(MJWalkLeft, MJWalkRight, 52, 300);
 
         }
 
@@ -99,6 +110,9 @@ namespace Michael_Jackson_s_Moonwalker
             Screen3 = Content.Load<Texture2D>("screen 3");
             Screen4 = Content.Load<Texture2D>("screen 4");
             Screen5 = Content.Load<Texture2D>("screen 5");
+            Enemy = Content.Load<Texture2D>("Enemy");
+            DeadEnemy = Content.Load<Texture2D>("DeadEnemy");
+            EnemyPunch = Content.Load<Texture2D>("EnemyPunch");
             upstairsScreen1 = Content.Load<Texture2D>("upstairs screen 1");
             upstairsScreen2 = Content.Load<Texture2D>("upstairs screen 2");
             upstairsScreen3 = Content.Load<Texture2D>("upstairs screen 3");
@@ -130,17 +144,36 @@ namespace Michael_Jackson_s_Moonwalker
             }
             else if (screen == Screen.Screen1)
             {
-                MJ.Update(keyboardState);
-                if (keyboardState.IsKeyDown(Keys.D))
-                {
-                    MJTexture = MJWalkRight;
-                    MJ.HSpeed = 1;
-                }
 
-                else if (keyboardState.IsKeyDown(Keys.A))
+
+                MJ.Update(keyboardState);
+
+
+                if (keyboardState.IsKeyDown(Keys.E))
                 {
-                    MJTexture = MJWalkLeft;
-                    MJ.HSpeed = -1;
+                    MJTexture = MJkick;
+
+                    if (EnemyRect.X + 5 <= MJ.X)
+                    {
+                        EnemyTexture = DeadEnemy;
+
+                    }
+
+                    if (EnemyRect.X - 5 <= MJ.X)
+                    {
+                        EnemyTexture = DeadEnemy;
+
+                    }
+                    if (EnemyRect.X + 5 <= MJ.X)
+                    {
+                        EnemyTexture = EnemyPunch;
+                    }
+
+                    if (EnemyRect.X - 5 <= MJ.X)
+                    {
+                        EnemyTexture = EnemyPunch;
+                        Lives--;
+                    }
 
                 }
             }
@@ -172,17 +205,12 @@ namespace Michael_Jackson_s_Moonwalker
                 _spriteBatch.Draw(Screen1, ClubRect, Color.White);
                 MJ.Draw(_spriteBatch);
 
-                if (MJRect.X >= 799)
-                {
-                    screen = Screen.Screen2;
-                }
-
-
             }
             else if (screen == Screen.Screen2)
             {
                 MJRect.X = 750;
                 _spriteBatch.Draw(Screen2, ClubRect, Color.White);
+                _spriteBatch.Draw(EnemyTexture, EnemyRect, Color.White);
                 MJ.Draw(_spriteBatch);
             }
 
