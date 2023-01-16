@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using Player_Class;
 using System;
 using System.Runtime.CompilerServices;
+using System.Threading;
 
 namespace Michael_Jackson_s_Moonwalker
 {
@@ -26,8 +27,11 @@ namespace Michael_Jackson_s_Moonwalker
             UpstairsScreen5,
             UpstairsScreen6,
             UpstairsScreen7,
+            gameover,
 
         }
+        float seconds;
+        float startTime;
         Screen screen;
         MouseState mouseState;
         Player MJ;
@@ -54,6 +58,7 @@ namespace Michael_Jackson_s_Moonwalker
         Texture2D upstairsScreen7;
         Texture2D MJWalkRight;
         Texture2D MJWalkLeft;
+        Texture2D GameOverTexture;
         int Lives = 3;
         Texture2D MJWalk2;
         Rectangle ClubRect;
@@ -80,7 +85,7 @@ namespace Michael_Jackson_s_Moonwalker
             screen = Screen.Intro;
             _graphics.PreferredBackBufferWidth = 800;
             _graphics.PreferredBackBufferHeight = 500;
-            EnemyRect = new Rectangle(generator.Next(100, 500), 50, 48, 100);
+            EnemyRect = new Rectangle(generator.Next(100, 500), 250, 48, 100);
             DeadEnemyRect = new Rectangle(EnemyRect.X, 50, 118, 34);
             TitleRect = new Rectangle(0, 0, 800, 500);
             ClubRect = new Rectangle(0, 0, 800, 500);
@@ -111,7 +116,8 @@ namespace Michael_Jackson_s_Moonwalker
             Screen5 = Content.Load<Texture2D>("screen 5");
             Enemy = Content.Load<Texture2D>("Enemy");
             DeadEnemy = Content.Load<Texture2D>("DeadEnemy");
-            EnemyPunch = Content.Load<Texture2D>("EnemyPunch");
+            EnemyPunch = Content.Load<Texture2D>("Enemy.Punch");
+            GameOverTexture = Content.Load<Texture2D>("MJgameover");
             upstairsScreen1 = Content.Load<Texture2D>("upstairs screen 1");
             upstairsScreen2 = Content.Load<Texture2D>("upstairs screen 2");
             upstairsScreen3 = Content.Load<Texture2D>("upstairs screen 3");
@@ -126,8 +132,13 @@ namespace Michael_Jackson_s_Moonwalker
         {
             keyboardState = Keyboard.GetState();
             mouseState = Mouse.GetState();
+            seconds = (float)gameTime.TotalGameTime.TotalSeconds - startTime;
             MJ.VSpeed = 0;
             MJ.HSpeed = 0;
+            if (Convert.ToBoolean(Lives = 0))
+            {
+                Screen.gameover;
+            }
             if (!songplayed)
             {
                 songplayed = true;
@@ -150,6 +161,18 @@ namespace Michael_Jackson_s_Moonwalker
                 if (MJ.X >= 780)
                 {
                     screen = Screen.Screen2;
+                    MJ.X = 50;
+
+                }
+                if (MJ.Collide(EnemyRect))
+                {
+                    EnemyTexture = EnemyPunch;
+                }
+
+                if (MJ.Collide(EnemyRect))
+                {
+                    EnemyTexture = EnemyPunch;
+                    Lives--;
                 }
                 if (keyboardState.IsKeyDown(Keys.E))
                 {
@@ -166,16 +189,7 @@ namespace Michael_Jackson_s_Moonwalker
                         EnemyTexture = DeadEnemy;
 
                     }
-                    if (EnemyRect.X + 5 <= MJ.X)
-                    {
-                        EnemyTexture = EnemyPunch;
-                    }
-
-                    if (EnemyRect.X - 5 <= MJ.X)
-                    {
-                        EnemyTexture = EnemyPunch;
-                        Lives--;
-                    }
+                   
 
 
 
@@ -195,32 +209,110 @@ namespace Michael_Jackson_s_Moonwalker
                         EnemyTexture = DeadEnemy;
 
                     }
+                    
+                }
+            }
+            else if (screen == Screen.Screen2)
+            {
+                MJ.Update(keyboardState);
+
+                EnemyTexture = Enemy;
+
+                if (MJ.X >= 780)
+                {
+                    screen = Screen.Screen3;
+                    MJ.X = 50;
+                }
+                if (MJ.Collide(EnemyRect))
+                {
+                    EnemyTexture = EnemyPunch;
+                }
+
+                if (MJ.Collide(EnemyRect))
+                {
+                    EnemyTexture = EnemyPunch;
+                    Lives--;
+                }
+                if (keyboardState.IsKeyDown(Keys.E))
+                {
+                    MJTexture = MJkick;
+
+
                     if (EnemyRect.X + 5 <= MJ.X)
                     {
-                        EnemyTexture = EnemyPunch;
+                        EnemyTexture = DeadEnemy;
+
                     }
 
                     if (EnemyRect.X - 5 <= MJ.X)
                     {
-                        EnemyTexture = EnemyPunch;
-                        Lives--;
+                        EnemyTexture = DeadEnemy;
+
                     }
+                    
+                    if (keyboardState.IsKeyDown(Keys.Q))
+                    {
+                        MJTexture = MJArm;
+
+                        if (EnemyRect.X + 5 <= MJ.X)
+                        {
+                            EnemyTexture = DeadEnemy;
+
+                        }
+
+                        if (EnemyRect.X - 5 <= MJ.X)
+                        {
+                            EnemyTexture = DeadEnemy;
+
+                        }
+                       
+                    }
+
+
+
+                }
+            }
+            else if (screen == Screen.Screen3)
+            {
+                MJ.Update(keyboardState);
+
+                EnemyTexture = Enemy;
+
+                if (MJ.X >= 780)
+                {
+                    screen = Screen.Screen4;
+                    MJ.X = 50;
+                }
+                if (MJ.Collide(EnemyRect))
+                {
+                    EnemyTexture = EnemyPunch;
                 }
 
-                else if (screen == Screen.Screen2)
+                if (MJ.Collide(EnemyRect))
                 {
-                    MJ.Update(keyboardState);
+                    EnemyTexture = EnemyPunch;
+                    Lives--;
+                }
+                if (keyboardState.IsKeyDown(Keys.E))
+                {
+                    MJTexture = MJkick;
 
-                    EnemyTexture = Enemy;
 
-                    if (MJ.X >= 780)
+                    if (EnemyRect.X + 5 <= MJ.X)
                     {
-                        screen = Screen.Screen3;
+                        EnemyTexture = DeadEnemy;
+
                     }
-                    if (keyboardState.IsKeyDown(Keys.E))
-                    {
-                        MJTexture = MJkick;
 
+                    if (EnemyRect.X - 5 <= MJ.X)
+                    {
+                        EnemyTexture = DeadEnemy;
+
+                    }
+                    
+                    if (keyboardState.IsKeyDown(Keys.Q))
+                    {
+                        MJTexture = MJArm;
 
                         if (EnemyRect.X + 5 <= MJ.X)
                         {
@@ -233,447 +325,511 @@ namespace Michael_Jackson_s_Moonwalker
                             EnemyTexture = DeadEnemy;
 
                         }
-                        if (EnemyRect.X + 5 <= MJ.X)
-                        {
-                            EnemyTexture = EnemyPunch;
-                        }
-
-                        if (EnemyRect.X - 5 <= MJ.X)
-                        {
-                            EnemyTexture = EnemyPunch;
-                            Lives--;
-                        }
-
-
-
+                        
                     }
-                    else if (screen == Screen.Screen3)
-                    {
-                        MJ.Update(keyboardState);
 
-                        EnemyTexture = Enemy;
 
-                        if (MJ.X >= 780)
-                        {
-                            screen = Screen.Screen4;
-                        }
-                        if (keyboardState.IsKeyDown(Keys.E))
-                        {
-                            MJTexture = MJkick;
 
-
-                            if (EnemyRect.X + 5 <= MJ.X)
-                            {
-                                EnemyTexture = DeadEnemy;
-
-                            }
-
-                            if (EnemyRect.X - 5 <= MJ.X)
-                            {
-                                EnemyTexture = DeadEnemy;
-
-                            }
-                            if (EnemyRect.X + 5 <= MJ.X)
-                            {
-                                EnemyTexture = EnemyPunch;
-                            }
-
-                            if (EnemyRect.X - 5 <= MJ.X)
-                            {
-                                EnemyTexture = EnemyPunch;
-                                Lives--;
-                            }
-
-
-
-                        }
-
-                        else if (screen == Screen.Screen4)
-                        {
-                            MJ.Update(keyboardState);
-
-                            EnemyTexture = Enemy;
-
-                            if (MJ.X >= 400)
-                            {
-                                screen = Screen.UpstairsScreen1;
-                            }
-                            if (keyboardState.IsKeyDown(Keys.E))
-                            {
-                                MJTexture = MJkick;
-
-
-                                if (EnemyRect.X + 5 <= MJ.X)
-                                {
-                                    EnemyTexture = DeadEnemy;
-
-                                }
-
-                                if (EnemyRect.X - 5 <= MJ.X)
-                                {
-                                    EnemyTexture = DeadEnemy;
-
-                                }
-                                if (EnemyRect.X + 5 <= MJ.X)
-                                {
-                                    EnemyTexture = EnemyPunch;
-                                }
-
-                                if (EnemyRect.X - 5 <= MJ.X)
-                                {
-                                    EnemyTexture = EnemyPunch;
-                                    Lives--;
-                                }
-
-
-
-                            }
-
-                            else if (screen == Screen.UpstairsScreen1)
-                            {
-                                MJ.Update(keyboardState);
-
-                                EnemyTexture = Enemy;
-
-                                if (MJ.X <= 10)
-                                {
-                                    screen = Screen.UpstairsScreen2;
-                                }
-                                if (keyboardState.IsKeyDown(Keys.E))
-                                {
-                                    MJTexture = MJkick;
-
-
-                                    if (EnemyRect.X + 5 <= MJ.X)
-                                    {
-                                        EnemyTexture = DeadEnemy;
-
-                                    }
-
-                                    if (EnemyRect.X - 5 <= MJ.X)
-                                    {
-                                        EnemyTexture = DeadEnemy;
-
-                                    }
-                                    if (EnemyRect.X + 5 <= MJ.X)
-                                    {
-                                        EnemyTexture = EnemyPunch;
-                                    }
-
-                                    if (EnemyRect.X - 5 <= MJ.X)
-                                    {
-                                        EnemyTexture = EnemyPunch;
-                                        Lives--;
-                                    }
-
-
-
-                                }
-
-                                else if (screen == Screen.UpstairsScreen2)
-                                {
-                                    MJ.Update(keyboardState);
-
-                                    EnemyTexture = Enemy;
-
-                                    if (MJ.X <= 10)
-                                    {
-                                        screen = Screen.UpstairsScreen3;
-                                    }
-                                    if (keyboardState.IsKeyDown(Keys.E))
-                                    {
-                                        MJTexture = MJkick;
-
-
-                                        if (EnemyRect.X + 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = DeadEnemy;
-
-                                        }
-
-                                        if (EnemyRect.X - 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = DeadEnemy;
-
-                                        }
-                                        if (EnemyRect.X + 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = EnemyPunch;
-                                        }
-
-                                        if (EnemyRect.X - 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = EnemyPunch;
-                                            Lives--;
-                                        }
-
-
-
-                                    }
-                                    if (keyboardState.IsKeyDown(Keys.Q))
-                                    {
-                                        MJTexture = MJArm;
-
-                                        if (EnemyRect.X + 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = DeadEnemy;
-
-                                        }
-
-                                        if (EnemyRect.X - 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = DeadEnemy;
-
-                                        }
-                                        if (EnemyRect.X + 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = EnemyPunch;
-                                        }
-
-                                        if (EnemyRect.X - 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = EnemyPunch;
-                                            Lives--;
-                                        }
-                                    }
-                                }
-                                else if (screen == Screen.UpstairsScreen4)
-                                {
-                                    MJ.Update(keyboardState);
-
-                                    EnemyTexture = Enemy;
-
-                                    if (MJ.X <= 10)
-                                    {
-                                        screen = Screen.UpstairsScreen4;
-                                    }
-                                    if (keyboardState.IsKeyDown(Keys.E))
-                                    {
-                                        MJTexture = MJkick;
-
-
-                                        if (EnemyRect.X + 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = DeadEnemy;
-
-                                        }
-
-                                        if (EnemyRect.X - 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = DeadEnemy;
-
-                                        }
-                                        if (EnemyRect.X + 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = EnemyPunch;
-                                        }
-
-                                        if (EnemyRect.X - 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = EnemyPunch;
-                                            Lives--;
-                                        }
-
-
-
-                                    }
-                                    if (keyboardState.IsKeyDown(Keys.Q))
-                                    {
-                                        MJTexture = MJArm;
-
-                                        if (EnemyRect.X + 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = DeadEnemy;
-
-                                        }
-
-                                        if (EnemyRect.X - 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = DeadEnemy;
-
-                                        }
-                                        if (EnemyRect.X + 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = EnemyPunch;
-                                        }
-
-                                        if (EnemyRect.X - 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = EnemyPunch;
-                                            Lives--;
-                                        }
-                                    }
-                                }
-                                else if (screen == Screen.UpstairsScreen4)
-                                {
-                                    MJ.Update(keyboardState);
-
-                                    EnemyTexture = Enemy;
-
-                                    if (MJ.X <= 10)
-                                    {
-                                        screen = Screen.UpstairsScreen5;
-                                    }
-                                    if (keyboardState.IsKeyDown(Keys.E))
-                                    {
-                                        MJTexture = MJkick;
-
-
-                                        if (EnemyRect.X + 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = DeadEnemy;
-
-                                        }
-
-                                        if (EnemyRect.X - 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = DeadEnemy;
-
-                                        }
-                                        if (EnemyRect.X + 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = EnemyPunch;
-                                        }
-
-                                        if (EnemyRect.X - 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = EnemyPunch;
-                                            Lives--;
-                                        }
-
-
-
-                                    }
-
-
-
-
-                                }
-                                else if (screen == Screen.UpstairsScreen5)
-                                {
-                                    MJ.Update(keyboardState);
-
-                                    EnemyTexture = Enemy;
-
-                                    if (MJ.X <= 10)
-                                    {
-                                        screen = Screen.UpstairsScreen6;
-                                    }
-                                    if (keyboardState.IsKeyDown(Keys.E))
-                                    {
-                                        MJTexture = MJkick;
-
-
-                                        if (EnemyRect.X + 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = DeadEnemy;
-
-                                        }
-
-                                        if (EnemyRect.X - 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = DeadEnemy;
-
-                                        }
-                                        if (EnemyRect.X + 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = EnemyPunch;
-                                        }
-
-                                        if (EnemyRect.X - 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = EnemyPunch;
-                                            Lives--;
-                                        }
-
-
-
-                                    }
-
-                                }
-                                else if (screen == Screen.UpstairsScreen6)
-                                {
-                                    MJ.Update(keyboardState);
-
-                                    EnemyTexture = Enemy;
-
-                                    if (MJ.X <= 10)
-                                    {
-                                        screen = Screen.UpstairsScreen7;
-                                    }
-                                    if (keyboardState.IsKeyDown(Keys.E))
-                                    {
-                                        MJTexture = MJkick;
-
-
-                                        if (EnemyRect.X + 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = DeadEnemy;
-
-                                        }
-
-                                        if (EnemyRect.X - 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = DeadEnemy;
-
-                                        }
-                                        if (EnemyRect.X + 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = EnemyPunch;
-                                        }
-
-                                        if (EnemyRect.X - 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = EnemyPunch;
-                                            Lives--;
-                                        }
-
-
-
-                                    }
-                                }
-                                else if (screen == Screen.UpstairsScreen7)
-                                {
-                                    MJ.Update(keyboardState);
-
-                                    EnemyTexture = Enemy;
-
-                                    if (MJ.X <= 10)
-                                    {
-                                        screen = Screen.UpstairsScreen2;
-                                    }
-                                    if (keyboardState.IsKeyDown(Keys.E))
-                                    {
-                                        MJTexture = MJkick;
-
-
-                                        if (EnemyRect.X + 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = DeadEnemy;
-
-                                        }
-
-                                        if (EnemyRect.X - 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = DeadEnemy;
-
-                                        }
-                                        if (EnemyRect.X + 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = EnemyPunch;
-                                        }
-
-                                        if (EnemyRect.X - 5 <= MJ.X)
-                                        {
-                                            EnemyTexture = EnemyPunch;
-                                            Lives--;
-                                        }                    }                        }                }
-                                }
-
-
-                                    }
-                                }
+                }
             }
+            else if (screen == Screen.Screen4)
+            {
+                MJ.Update(keyboardState);
+
+                EnemyTexture = Enemy;
+
+                if (MJ.X >= 400)
+                {
+                    screen = Screen.UpstairsScreen1;
+                    MJ.X = 400;
+                }
+                if (MJ.Collide(EnemyRect))
+                {
+                    EnemyTexture = EnemyPunch;
+                }
+
+                if (MJ.Collide(EnemyRect))
+                {
+                    EnemyTexture = EnemyPunch;
+                    Lives--;
+                }
+                if (keyboardState.IsKeyDown(Keys.E))
+                {
+                    MJTexture = MJkick;
+
+
+                    if (EnemyRect.X + 5 <= MJ.X)
+                    {
+                        EnemyTexture = DeadEnemy;
+
+                    }
+
+                    if (EnemyRect.X - 5 <= MJ.X)
+                    {
+                        EnemyTexture = DeadEnemy;
+
+                    }
+                    
+                    if (keyboardState.IsKeyDown(Keys.Q))
+                    {
+                        MJTexture = MJArm;
+
+                        if (EnemyRect.X + 5 <= MJ.X)
+                        {
+                            EnemyTexture = DeadEnemy;
+
+                        }
+
+                        if (EnemyRect.X - 5 <= MJ.X)
+                        {
+                            EnemyTexture = DeadEnemy;
+
+                        }
+                    }
+                        
+                    
+
+
+
+                }
+            }
+            else if (screen == Screen.UpstairsScreen1)
+            {
+                MJ.Update(keyboardState);
+
+                EnemyTexture = Enemy;
+
+                if (MJ.X <= 10)
+                {
+                    screen = Screen.UpstairsScreen2;
+                    MJ.X = 400;
+                }
+                if (MJ.Collide(EnemyRect))
+                {
+                    EnemyTexture = EnemyPunch;
+                }
+
+                if (MJ.Collide(EnemyRect))
+                {
+                    EnemyTexture = EnemyPunch;
+                    Lives--;
+                }
+                if (keyboardState.IsKeyDown(Keys.E))
+                {
+                    MJTexture = MJkick;
+
+
+                    if (EnemyRect.X + 5 <= MJ.X)
+                    {
+                        EnemyTexture = DeadEnemy;
+
+                    }
+
+                    if (EnemyRect.X - 5 <= MJ.X)
+                    {
+                        EnemyTexture = DeadEnemy;
+
+                    }
+                    
+                    if (keyboardState.IsKeyDown(Keys.Q))
+                    {
+                        MJTexture = MJArm;
+
+                        if (EnemyRect.X + 5 <= MJ.X)
+                        {
+                            EnemyTexture = DeadEnemy;
+
+                        }
+
+                        if (EnemyRect.X - 5 <= MJ.X)
+                        {
+                            EnemyTexture = DeadEnemy;
+
+                        }
+                       
+                    }
+
+
+
+                }
+            }
+            else if (screen == Screen.UpstairsScreen2)
+            {
+                MJ.Update(keyboardState);
+
+                EnemyTexture = Enemy;
+
+                if (MJ.X <= 10)
+                {
+                    screen = Screen.UpstairsScreen3;
+                    MJ.X = 400;
+                }
+                if (MJ.Collide(EnemyRect))
+                {
+                    EnemyTexture = EnemyPunch;
+                }
+
+                if (MJ.Collide(EnemyRect))
+                {
+                    EnemyTexture = EnemyPunch;
+                    Lives--;
+                }
+                if (keyboardState.IsKeyDown(Keys.E))
+                {
+                    MJTexture = MJkick;
+
+
+                    if (EnemyRect.X + 5 <= MJ.X)
+                    {
+                        EnemyTexture = DeadEnemy;
+
+                    }
+
+                    if (EnemyRect.X - 5 <= MJ.X)
+                    {
+                        EnemyTexture = DeadEnemy;
+
+                    }
+                    
+
+
+
+                }
+                if (keyboardState.IsKeyDown(Keys.Q))
+                {
+                    MJTexture = MJArm;
+
+                    if (EnemyRect.X + 5 <= MJ.X)
+                    {
+                        EnemyTexture = DeadEnemy;
+
+                    }
+
+                    if (EnemyRect.X - 5 <= MJ.X)
+                    {
+                        EnemyTexture = DeadEnemy;
+
+                    }
+                   
+                }
+            }
+            else if (screen == Screen.UpstairsScreen4)
+            {
+                MJ.Update(keyboardState);
+
+                EnemyTexture = Enemy;
+
+                if (MJ.X <= 10)
+                {
+                    screen = Screen.UpstairsScreen4;
+                    MJ.X = 400;
+                }
+                if (MJ.Collide(EnemyRect))
+                {
+                    EnemyTexture = EnemyPunch;
+                }
+
+                if (MJ.Collide(EnemyRect))
+                {
+                    EnemyTexture = EnemyPunch;
+                    Lives--;
+                }
+                if (keyboardState.IsKeyDown(Keys.E))
+                {
+                    MJTexture = MJkick;
+
+
+                    if (EnemyRect.X + 5 <= MJ.X)
+                    {
+                        EnemyTexture = DeadEnemy;
+
+                    }
+
+                    if (EnemyRect.X - 5 <= MJ.X)
+                    {
+                        EnemyTexture = DeadEnemy;
+
+                    }
+                    
+
+
+
+                }
+                if (keyboardState.IsKeyDown(Keys.Q))
+                {
+                    MJTexture = MJArm;
+
+                    if (EnemyRect.X + 5 <= MJ.X)
+                    {
+                        EnemyTexture = DeadEnemy;
+
+                    }
+
+                    if (EnemyRect.X - 5 <= MJ.X)
+                    {
+                        EnemyTexture = DeadEnemy;
+
+                    }
+                    
+                }
+            }
+            else if (screen == Screen.UpstairsScreen4)
+            {
+                MJ.Update(keyboardState);
+
+                EnemyTexture = Enemy;
+
+                if (MJ.X <= 10)
+                {
+                    screen = Screen.UpstairsScreen5;
+                    MJ.X = 400;
+                }
+                if (MJ.Collide(EnemyRect))
+                {
+                    EnemyTexture = EnemyPunch;
+                }
+
+                if (MJ.Collide(EnemyRect))
+                {
+                    EnemyTexture = EnemyPunch;
+                    Lives--;
+                }
+                if (keyboardState.IsKeyDown(Keys.E))
+                {
+                    MJTexture = MJkick;
+
+
+                    if (EnemyRect.X + 5 <= MJ.X)
+                    {
+                        EnemyTexture = DeadEnemy;
+
+                    }
+
+                    if (EnemyRect.X - 5 <= MJ.X)
+                    {
+                        EnemyTexture = DeadEnemy;
+
+                    }
+                    
+                    if (keyboardState.IsKeyDown(Keys.Q))
+                    {
+                        MJTexture = MJArm;
+
+                        if (EnemyRect.X + 5 <= MJ.X)
+                        {
+                            EnemyTexture = DeadEnemy;
+
+                        }
+
+                        if (EnemyRect.X - 5 <= MJ.X)
+                        {
+                            EnemyTexture = DeadEnemy;
+
+                        }
+                       
+                    }
+
+
+
+                }
+
+
+
+
+            }
+            else if (screen == Screen.UpstairsScreen5)
+            {
+                MJ.Update(keyboardState);
+
+                EnemyTexture = Enemy;
+
+                if (MJ.X <= 10)
+                {
+                    screen = Screen.UpstairsScreen6;
+                    MJ.X = 400;
+                }
+                if (MJ.Collide(EnemyRect))
+                {
+                    EnemyTexture = EnemyPunch;
+                }
+
+                if (MJ.Collide(EnemyRect))
+                {
+                    EnemyTexture = EnemyPunch;
+                    Lives--;
+                }
+                if (keyboardState.IsKeyDown(Keys.E))
+                {
+                    MJTexture = MJkick;
+
+
+                    if (EnemyRect.X + 5 <= MJ.X)
+                    {
+                        EnemyTexture = DeadEnemy;
+
+                    }
+
+                    if (EnemyRect.X - 5 <= MJ.X)
+                    {
+                        EnemyTexture = DeadEnemy;
+
+                    }
+                   
+                    if (keyboardState.IsKeyDown(Keys.Q))
+                    {
+                        MJTexture = MJArm;
+
+                        if (EnemyRect.X + 5 <= MJ.X)
+                        {
+                            EnemyTexture = DeadEnemy;
+
+                        }
+
+                        if (EnemyRect.X - 5 <= MJ.X)
+                        {
+                            EnemyTexture = DeadEnemy;
+
+                        }
+                     
+
+                    }
+
+
+
+                }
+
+            }
+            else if (screen == Screen.UpstairsScreen6)
+            {
+                MJ.Update(keyboardState);
+
+                EnemyTexture = Enemy;
+
+                if (MJ.X <= 10)
+                {
+                    screen = Screen.UpstairsScreen7;
+                }
+                if (MJ.Collide(EnemyRect))
+                {
+                    EnemyTexture = EnemyPunch;
+                }
+
+                if (MJ.Collide(EnemyRect))
+                {
+                    EnemyTexture = EnemyPunch;
+                    Lives--;
+                }
+                if (keyboardState.IsKeyDown(Keys.E))
+                {
+                    MJTexture = MJkick;
+
+
+                    if (EnemyRect.X + 5 <= MJ.X)
+                    {
+                        EnemyTexture = DeadEnemy;
+
+                    }
+
+                    if (EnemyRect.X - 5 <= MJ.X)
+                    {
+                        EnemyTexture = DeadEnemy;
+
+                    }
+                    
+                    if (keyboardState.IsKeyDown(Keys.Q))
+                    {
+                        MJTexture = MJArm;
+
+                        if (EnemyRect.X + 5 <= MJ.X)
+                        {
+                            EnemyTexture = DeadEnemy;
+
+                        }
+
+                        if (EnemyRect.X - 5 <= MJ.X)
+                        {
+                            EnemyTexture = DeadEnemy;
+
+                        }
+                        
+                    }
+
+
+
+                }
+            }
+            else if (screen == Screen.UpstairsScreen7)
+            {
+                MJ.Update(keyboardState);
+
+                EnemyTexture = Enemy;
+
+                if (MJ.X <= 10)
+                {
+                    screen = Screen.UpstairsScreen2;
+                }
+                if (MJ.Collide(EnemyRect))
+                {
+                    EnemyTexture = EnemyPunch;
+                }
+
+                if (MJ.Collide(EnemyRect))
+                {
+                    EnemyTexture = EnemyPunch;
+                    Lives--;
+                }
+                if (keyboardState.IsKeyDown(Keys.E))
+                {
+                    MJTexture = MJkick;
+
+
+                    if (EnemyRect.X + 5 <= MJ.X)
+                    {
+                        EnemyTexture = DeadEnemy;
+
+                    }
+
+                    if (EnemyRect.X - 5 <= MJ.X)
+                    {
+                        EnemyTexture = DeadEnemy;
+
+                    }
+                    
+                    if (keyboardState.IsKeyDown(Keys.Q))
+                    {
+                        MJTexture = MJArm;
+
+                        if (EnemyRect.X + 5 <= MJ.X)
+                        {
+                            EnemyTexture = DeadEnemy;
+
+                        }
+
+                        if (EnemyRect.X - 5 <= MJ.X)
+                        {
+                            EnemyTexture = DeadEnemy;
+
+                        }
+                        
+
+                    }
+                }
+            }
+
+            else if (screen == Screen.gameover)
+            {
+                if (seconds >= 5)
+                    Exit();
+                
+            }
+            
+
+
+
+
+
+
+
 
 
 
@@ -684,6 +840,7 @@ namespace Michael_Jackson_s_Moonwalker
 
             base.Update(gameTime);
         }
+        
 
             
 
@@ -705,7 +862,7 @@ namespace Michael_Jackson_s_Moonwalker
             {
                
                 _spriteBatch.Draw(Screen2, ClubRect, Color.White);
-                _spriteBatch.Draw(EnemyTexture, EnemyRect, Color.White);
+                
                 MJ.Draw(_spriteBatch);
             }
             else if (screen == Screen.Screen3)
@@ -777,6 +934,10 @@ namespace Michael_Jackson_s_Moonwalker
                 _spriteBatch.Draw(upstairsScreen7, ClubRect, Color.White);
                 _spriteBatch.Draw(EnemyTexture, EnemyRect, Color.White);
                 MJ.Draw(_spriteBatch);
+            }
+            else if (screen == Screen.gameover)
+            {
+                _spriteBatch.Draw(GameOverTexture, ClubRect, Color.White);
             }
 
             GraphicsDevice.Clear(Color.Black);

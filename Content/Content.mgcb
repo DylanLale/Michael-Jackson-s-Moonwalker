@@ -37,7 +37,7 @@
 /processorParam:TextureFormat=Color
 /build:Enemy.png
 
-#begin EnemyPunch.png
+#begin Enemy.Punch.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -47,7 +47,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:EnemyPunch.png
+/build:Enemy.Punch.png
 
 #begin MJ Moonwalker.jpg
 /importer:TextureImporter
@@ -72,6 +72,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:MJarm.png
+
+#begin MJgameover.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MJgameover.jpg
 
 #begin MJkick.png
 /importer:TextureImporter
@@ -271,7 +283,7 @@
 /processorParam:TextureFormat=Color
 /build:upstairs screen 6.psd
 
-#begin upstairs screen 7.psd
+#begin upstairs screen 7.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -281,5 +293,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:upstairs screen 7.psd
+/build:upstairs screen 7.png
 

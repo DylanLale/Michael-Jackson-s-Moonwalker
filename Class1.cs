@@ -77,6 +77,11 @@ namespace Player_Class
             _location.Y -= (int)_speed.Y;
         }
 
+        public bool Collide(Rectangle item)
+        {
+            return _location.Intersects(item);
+        }
+
         public void Update(KeyboardState keyboardState)
         {
            
