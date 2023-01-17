@@ -24,7 +24,7 @@ namespace Player_Class
             _attackTexture = TextureAttack;
             _armtexture = ArmTexture;
             _currentTexture = textureRight;
-            _location = new Rectangle(x, y, 58, 122);
+            _location = new Rectangle(x, y, 78, 142);
             _speed = new Vector2();
            
         }
@@ -89,13 +89,13 @@ namespace Player_Class
             if (keyboardState.IsKeyDown(Keys.D))
             {
                 _currentTexture = _rightTexture;
-                _speed.X = 3;
+                _speed.X = 5;
             }
 
             else if (keyboardState.IsKeyDown(Keys.A))
             {
                 _currentTexture = _leftTexture;
-                _speed.X =  -3;
+                _speed.X =  -5;
 
             }
 
