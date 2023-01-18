@@ -100,6 +100,7 @@ namespace Michael_Jackson_s_Moonwalker
 
             base.Initialize();
             MJ = new Player(MJWalkLeft, MJWalkRight, MJkick, MJArm, 52, 300);
+            Enemy = new Enemy(Enemy, EnemyPunch, DeadEnemy, 88, 140);
 
         }
 
