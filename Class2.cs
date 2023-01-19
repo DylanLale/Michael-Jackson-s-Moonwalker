@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -8,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace Enemy_Class
 {
-    internal class Enemy
+    class Enemy
 {
         private Texture2D _defaultTexture;
         private Texture2D _attackTexture;
         private Texture2D _deadTexture;
         private Rectangle _location;
-        private bool dead = false;
+        private bool _dead;
 
         public Enemy(Texture2D defaultTexture, Texture2D attackTexture, Texture2D deadTexture, int x, int y)
         {
@@ -22,6 +23,7 @@ namespace Enemy_Class
             _attackTexture = attackTexture;
             _deadTexture = deadTexture;
             _location = new Rectangle(x, y, 78, 142);
+            _dead = false;
         }
         public int X
         {
@@ -34,16 +36,29 @@ namespace Enemy_Class
             get { return _location.Y; }
             set { _location.Y = value; }
         }
+        public int Width
+        {
+            get { return _location.Width; }
+        }
+        public int Height
+        {
+            get { return _location.Height; }
+        }
         public void Draw(SpriteBatch spriteBatch)
         {
-
-            spriteBatch.Draw(_defaultTexture, _location, Color.White);
+            if (_dead)
+            {
+                spriteBatch.Draw(_deadTexture, new Rectangle(_location.X, 400, 118, 34), Color.White);
+            }
+            else
+                spriteBatch.Draw(_defaultTexture, _location, Color.White);
         }
 
-        public bool Dead (KeyboardState keyboardState)
+        public bool Dead
         {
-            if (MJ = _attackTexture)
-                dead = true;
+            get { return _dead; }
+            set { _dead = value; }
+
         }
 
     }

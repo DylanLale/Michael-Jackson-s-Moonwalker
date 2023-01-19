@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Enemy_Class;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -36,13 +37,14 @@ namespace Michael_Jackson_s_Moonwalker
         Screen screen;
         MouseState mouseState;
         Player MJ;
+        Enemy BadGuy;
         Texture2D TitleScreen;
         Rectangle TitleRect;
         Texture2D MJTexture;
         Texture2D EnemyTexture;
         Texture2D MJkick;
         Texture2D MJArm;
-        Texture2D Enemy;
+        Texture2D EnemyDefault;
         Texture2D DeadEnemy;
         Texture2D EnemyPunch;
         Texture2D Screen1;
@@ -89,8 +91,6 @@ namespace Michael_Jackson_s_Moonwalker
             EnemyRect.Y = 295;
             _graphics.PreferredBackBufferWidth = 800;
             _graphics.PreferredBackBufferHeight = 500;
-            EnemyRect = new Rectangle(generator.Next(100, 500), EnemyRect.Y, 88, 140);
-            DeadEnemyRect = new Rectangle(EnemyRect.X, EnemyRect.Y, 34, 118);
             TitleRect = new Rectangle(0, 0, 800, 500);
             ClubRect = new Rectangle(0, 0, 800, 500);
             MJRect = new Rectangle(750, 50, 48, 100);
@@ -100,7 +100,8 @@ namespace Michael_Jackson_s_Moonwalker
 
             base.Initialize();
             MJ = new Player(MJWalkLeft, MJWalkRight, MJkick, MJArm, 52, 300);
-            Enemy = new Enemy(Enemy, EnemyPunch, DeadEnemy, 88, 140);
+            BadGuy = new Enemy(EnemyDefault, EnemyPunch, DeadEnemy, generator.Next(100, 600), 300);
+          
 
         }
 
@@ -119,7 +120,7 @@ namespace Michael_Jackson_s_Moonwalker
             Screen3 = Content.Load<Texture2D>("screen 3");
             Screen4 = Content.Load<Texture2D>("screen 4");
             Screen5 = Content.Load<Texture2D>("screen 5");
-            Enemy = Content.Load<Texture2D>("Enemy");
+            EnemyDefault = Content.Load<Texture2D>("Enemy");
             DeadEnemy = Content.Load<Texture2D>("DeadEnemy");
             EnemyPunch = Content.Load<Texture2D>("Enemy.Punch");
             GameOverTexture = Content.Load<Texture2D>("MJgameover");
@@ -141,10 +142,7 @@ namespace Michael_Jackson_s_Moonwalker
             seconds = (float)gameTime.TotalGameTime.TotalSeconds - startTime;
             MJ.VSpeed = 0;
             MJ.HSpeed = 0;
-            // if (Lives == 0)
-            {
-                //(screen == Screen.gameover);
-            }
+            
             if (!songplayed)
             {
                 songplayed = true;
@@ -167,7 +165,7 @@ namespace Michael_Jackson_s_Moonwalker
                 if (MJ.X >= 780)
                 {
                     screen = Screen.Screen2;
-                    EnemyRect.X = (generator.Next(100, 600));
+                    BadGuy.X = (generator.Next(100, 600));
                     MJ.X = 50;
 
                 }
@@ -175,23 +173,16 @@ namespace Michael_Jackson_s_Moonwalker
                 if (MJ.Collide(EnemyRect))
                 {
                     EnemyTexture = EnemyPunch;
-                    Lives--;
+                    
                 }
                 if (keyboardState.IsKeyDown(Keys.E) && MJ.Collide(new Rectangle(EnemyRect.X - 10, EnemyRect.Y - 10, EnemyRect.Width + 20, EnemyRect.Height)))
                 {
                     MJTexture = MJkick;
+                    EnemyTexture = DeadEnemy;
+                    
+                    
 
-                    if (EnemyRect.X + 5 >= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
-
-                    if (EnemyRect.X - 5 >= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
+                   
 
 
 
@@ -201,13 +192,13 @@ namespace Michael_Jackson_s_Moonwalker
                 {
                     MJTexture = MJArm;
 
-                    if (EnemyRect.X + 5 <= MJ.X)
+                    if (BadGuy.X + 5 <= MJ.X)
                     {
                         EnemyTexture = DeadEnemy;
 
                     }
 
-                    if (EnemyRect.X - 5 >= MJ.X)
+                    if (BadGuy.X - 5 >= MJ.X)
                     {
                         EnemyTexture = DeadEnemy;
 
@@ -219,52 +210,29 @@ namespace Michael_Jackson_s_Moonwalker
             {
                 MJ.Update(keyboardState);
 
-                EnemyTexture = Enemy;
+                EnemyTexture = EnemyDefault;
 
                 if (MJ.X >= 780)
                 {
                     screen = Screen.Screen3;
-                    EnemyRect.X = (generator.Next(100, 500));
+                    BadGuy.X = (generator.Next(100, 500));
                     MJ.X = 50;
                 }
 
                 if (MJ.Collide(EnemyRect))
                 {
                     EnemyTexture = EnemyPunch;
-                    Lives--;
                 }
                 if (keyboardState.IsKeyDown(Keys.E))
                 {
                     MJTexture = MJkick;
 
 
-                    if (EnemyRect.X + 5 >= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
-
-                    if (EnemyRect.X - 5 <= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
+                   
                 }
                 if (keyboardState.IsKeyDown(Keys.Q))
                 {
                     MJTexture = MJArm;
-
-                    if (EnemyRect.X + 5 <= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
-
-                    if (EnemyRect.X - 5 >= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
 
                 }
 
@@ -276,57 +244,37 @@ namespace Michael_Jackson_s_Moonwalker
             {
                 MJ.Update(keyboardState);
 
-                EnemyTexture = Enemy;
+                EnemyTexture = EnemyDefault;
 
                 if (MJ.X >= 780)
                 {
                     screen = Screen.Screen4;
-                    EnemyRect.X = (generator.Next(100, 500));
+                    BadGuy.X = (generator.Next(100, 500));
                     MJ.X = 50;
                 }
                 if (MJ.Collide(EnemyRect))
                 {
                     EnemyTexture = EnemyPunch;
-                    Lives--;
                 }
-                if (keyboardState.IsKeyDown(Keys.E))
+                if (keyboardState.IsKeyDown(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 10, BadGuy.Y - 10, BadGuy.Width + 20, BadGuy.Height)))
                 {
                     MJTexture = MJkick;
 
 
-                    if (EnemyRect.X + 5 <= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
-
-                    if (EnemyRect.X - 5 >= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
+                    BadGuy.Dead = true;
 
 
 
-
+                  
+                    
 
 
                 }
-                if (keyboardState.IsKeyDown(Keys.Q))
+                if (keyboardState.IsKeyDown(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 20, BadGuy.Y - 20, BadGuy.Width + 40, BadGuy.Height)))
                 {
                     MJTexture = MJArm;
 
-                    if (EnemyRect.X + 30 <= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
-
-                    if (EnemyRect.X - 30 >= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
+                    BadGuy.Dead = true;
 
                 }
             }
@@ -334,7 +282,7 @@ namespace Michael_Jackson_s_Moonwalker
             {
                 MJ.Update(keyboardState);
 
-                EnemyTexture = Enemy;
+                EnemyTexture = EnemyDefault;
 
                 if (MJ.X >= 780)
                 {
@@ -345,41 +293,22 @@ namespace Michael_Jackson_s_Moonwalker
                 if (MJ.Collide(EnemyRect))
                 {
                     EnemyTexture = EnemyPunch;
-                    Lives--;
+                    
                 }
-                if (keyboardState.IsKeyDown(Keys.E))
+                if (keyboardState.IsKeyDown(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 20, BadGuy.Y - 20, BadGuy.Width + 40, BadGuy.Height)))
                 {
                     MJTexture = MJkick;
 
+                    BadGuy.Dead = true;
 
-                    if (EnemyRect.X + 5 <= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
 
-                    }
-
-                    if (EnemyRect.X - 5 >= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
 
                 }
-                if (keyboardState.IsKeyDown(Keys.Q))
+                if (keyboardState.IsKeyDown(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 20, BadGuy.Y - 20, BadGuy.Width + 40, BadGuy.Height)))
                 {
                     MJTexture = MJArm;
 
-                    if (EnemyRect.X + 30 <= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
-
-                    if (EnemyRect.X - 30 >= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
+                    BadGuy.Dead = true;
 
                 }
             }
@@ -387,7 +316,7 @@ namespace Michael_Jackson_s_Moonwalker
             {
                 MJ.Update(keyboardState);
 
-                EnemyTexture = Enemy;
+                EnemyTexture = EnemyDefault;
 
                 if (MJ.X >= 200)
                 {
@@ -399,41 +328,21 @@ namespace Michael_Jackson_s_Moonwalker
                 if (MJ.Collide(EnemyRect))
                 {
                     EnemyTexture = EnemyPunch;
-                    Lives--;
+ 
                 }
-                if (keyboardState.IsKeyDown(Keys.E))
+                if (keyboardState.IsKeyDown(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 20, BadGuy.Y - 20, BadGuy.Width + 40, BadGuy.Height)))
                 {
                     MJTexture = MJkick;
 
 
-                    if (EnemyRect.X + 5 <= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
-
-                    if (EnemyRect.X - 5 >= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
+                    BadGuy.Dead = true;
 
                 }
-                if (keyboardState.IsKeyDown(Keys.Q))
+                if (keyboardState.IsKeyDown(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 20, BadGuy.Y - 20, BadGuy.Width + 40, BadGuy.Height)))
                 {
                     MJTexture = MJArm;
 
-                    if (EnemyRect.X + 30 <= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
-
-                    if (EnemyRect.X - 30 >= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
+                    BadGuy.Dead = true;
 
                 }
             }
@@ -441,7 +350,7 @@ namespace Michael_Jackson_s_Moonwalker
             {
                 MJ.Update(keyboardState);
 
-                EnemyTexture = Enemy;
+                EnemyTexture = EnemyDefault;
 
                 if (MJ.X <= 10)
                 {
@@ -453,43 +362,22 @@ namespace Michael_Jackson_s_Moonwalker
                 if (MJ.Collide(EnemyRect))
                 {
                     EnemyTexture = EnemyPunch;
-                    Lives--;
                 }
-                if (keyboardState.IsKeyDown(Keys.E))
+                if (keyboardState.IsKeyDown(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 20, BadGuy.Y - 20, BadGuy.Width + 40, BadGuy.Height)))
                 {
                     MJTexture = MJkick;
 
 
-                    if (EnemyRect.X + 5 >= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
-
-                    if (EnemyRect.X - 5 <= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
+                    BadGuy.Dead = true;
 
 
 
                 }
-                if (keyboardState.IsKeyDown(Keys.Q))
+                if (keyboardState.IsKeyDown(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 20, BadGuy.Y - 20, BadGuy.Width + 40, BadGuy.Height)))
                 {
                     MJTexture = MJArm;
 
-                    if (EnemyRect.X + 30 <= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
-
-                    if (EnemyRect.X - 30 >= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
+                    BadGuy.Dead = true;
 
                 }
             }
@@ -497,7 +385,7 @@ namespace Michael_Jackson_s_Moonwalker
             {
                 MJ.Update(keyboardState);
 
-                EnemyTexture = Enemy;
+                EnemyTexture = EnemyDefault;
 
                 if (MJ.X <= 10)
                 {
@@ -509,44 +397,23 @@ namespace Michael_Jackson_s_Moonwalker
                 if (MJ.Collide(EnemyRect))
                 {
                     EnemyTexture = EnemyPunch;
-                    Lives--;
                 }
-                if (keyboardState.IsKeyDown(Keys.E))
+                if (keyboardState.IsKeyDown(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 20, BadGuy.Y - 20, BadGuy.Width + 40, BadGuy.Height)))
                 {
                     MJTexture = MJkick;
 
 
-                    if (EnemyRect.X + 5 >= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
-
-                    if (EnemyRect.X - 5 <= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
+                    BadGuy.Dead = true;
 
 
 
 
                 }
-                if (keyboardState.IsKeyDown(Keys.Q))
+                if (keyboardState.IsKeyDown(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 20, BadGuy.Y - 20, BadGuy.Width + 40, BadGuy.Height)))
                 {
                     MJTexture = MJArm;
 
-                    if (EnemyRect.X + 30 <= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
-
-                    if (EnemyRect.X - 30 >= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
+                    BadGuy.Dead = true;
 
                 }
             }
@@ -555,7 +422,7 @@ namespace Michael_Jackson_s_Moonwalker
             {
                 MJ.Update(keyboardState);
 
-                EnemyTexture = Enemy;
+                EnemyTexture = EnemyDefault;
 
                 if (MJ.X <= 10)
                 {
@@ -567,44 +434,23 @@ namespace Michael_Jackson_s_Moonwalker
                 if (MJ.Collide(EnemyRect))
                 {
                     EnemyTexture = EnemyPunch;
-                    Lives--;
                 }
-                if (keyboardState.IsKeyDown(Keys.E))
+                if (keyboardState.IsKeyDown(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 20, BadGuy.Y - 20, BadGuy.Width + 40, BadGuy.Height)))
                 {
                     MJTexture = MJkick;
 
 
-                    if (EnemyRect.X + 5 >= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
-
-                    if (EnemyRect.X - 5 <= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
+                    BadGuy.Dead = true;
 
 
 
 
                 }
-                if (keyboardState.IsKeyDown(Keys.Q))
+                if (keyboardState.IsKeyDown(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 20, BadGuy.Y - 20, BadGuy.Width + 40, BadGuy.Height)))
                 {
                     MJTexture = MJArm;
 
-                    if (EnemyRect.X + 30 <= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
-
-                    if (EnemyRect.X - 30 >= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
+                    BadGuy.Dead = true;
 
                 }
             }
@@ -613,7 +459,7 @@ namespace Michael_Jackson_s_Moonwalker
             {
                 MJ.Update(keyboardState);
 
-                EnemyTexture = Enemy;
+                EnemyTexture = EnemyDefault;
 
                 if (MJ.X <= 10)
                 {
@@ -625,40 +471,19 @@ namespace Michael_Jackson_s_Moonwalker
                 if (MJ.Collide(EnemyRect))
                 {
                     EnemyTexture = EnemyPunch;
-                    Lives--;
                 }
-                if (keyboardState.IsKeyDown(Keys.E))
+                if (keyboardState.IsKeyDown(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 20, BadGuy.Y - 20, BadGuy.Width + 40, BadGuy.Height)))
                 {
                     MJTexture = MJkick;
 
 
-                    if (EnemyRect.X + 5 >= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
+                    BadGuy.Dead = true;
 
-                    }
-
-                    if (EnemyRect.X - 5 <= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
-
-                    if (keyboardState.IsKeyDown(Keys.Q))
+                    if (keyboardState.IsKeyDown(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 20, BadGuy.Y - 20, BadGuy.Width + 40, BadGuy.Height)))
                     {
                         MJTexture = MJArm;
 
-                        if (EnemyRect.X + 5 >= MJ.X)
-                        {
-                            EnemyTexture = DeadEnemy;
-
-                        }
-
-                        if (EnemyRect.X - 5 <= MJ.X)
-                        {
-                            EnemyTexture = DeadEnemy;
-
-                        }
+                        BadGuy.Dead = true;
 
                     }
 
@@ -674,7 +499,7 @@ namespace Michael_Jackson_s_Moonwalker
             {
                 MJ.Update(keyboardState);
 
-                EnemyTexture = Enemy;
+                EnemyTexture = EnemyDefault;
 
                 if (MJ.X <= 10)
                 {
@@ -686,45 +511,17 @@ namespace Michael_Jackson_s_Moonwalker
                 if (MJ.Collide(EnemyRect))
                 {
                     EnemyTexture = EnemyPunch;
-                    Lives--;
                 }
-                if (keyboardState.IsKeyDown(Keys.E))
+                if (keyboardState.IsKeyDown(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 20, BadGuy.Y - 20, BadGuy.Width + 40, BadGuy.Height)))
                 {
                     MJTexture = MJkick;
-
-
-                    if (EnemyRect.X + 5 >= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
-
-                    if (EnemyRect.X - 5 <= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
-
-
-
-
-
+                    BadGuy.Dead = true;
                 }
-                if (keyboardState.IsKeyDown(Keys.Q))
+                if (keyboardState.IsKeyDown(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 20, BadGuy.Y - 20, BadGuy.Width + 40, BadGuy.Height)))
                 {
                     MJTexture = MJArm;
 
-                    if (EnemyRect.X + 30 <= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
-
-                    if (EnemyRect.X - 30 >= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
+                    BadGuy.Dead = true;
 
                 }
 
@@ -733,7 +530,7 @@ namespace Michael_Jackson_s_Moonwalker
             {
                 MJ.Update(keyboardState);
 
-                EnemyTexture = Enemy;
+                EnemyTexture = EnemyDefault;
 
                 if (MJ.X <= 10)
                 {
@@ -745,45 +542,24 @@ namespace Michael_Jackson_s_Moonwalker
                 if (MJ.Collide(EnemyRect))
                 {
                     EnemyTexture = EnemyPunch;
-                    Lives--;
                 }
-                if (keyboardState.IsKeyDown(Keys.E))
+                if (keyboardState.IsKeyDown(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 20, BadGuy.Y - 20, BadGuy.Width + 40, BadGuy.Height)))
                 {
                     MJTexture = MJkick;
 
 
-                    if (EnemyRect.X + 5 >= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
-
-                    if (EnemyRect.X - 5 <= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
+                    BadGuy.Dead = true;
 
 
 
 
 
                 }
-                if (keyboardState.IsKeyDown(Keys.Q))
+                if (keyboardState.IsKeyDown(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 20, BadGuy.Y - 20, BadGuy.Width + 40, BadGuy.Height)))
                 {
                     MJTexture = MJArm;
 
-                    if (EnemyRect.X + 30 <= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
-
-                    if (EnemyRect.X - 30 >= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
+                    BadGuy.Dead = true;
 
                 }
             }
@@ -791,7 +567,7 @@ namespace Michael_Jackson_s_Moonwalker
             {
                 MJ.Update(keyboardState);
 
-                EnemyTexture = Enemy;
+                EnemyTexture = EnemyDefault;
 
                 if (MJ.X <= 10)
                 {
@@ -800,46 +576,25 @@ namespace Michael_Jackson_s_Moonwalker
                 if (MJ.Collide(EnemyRect))
                 {
                     EnemyTexture = EnemyPunch;
-                    Lives--;
                 }
                 if (MJ.Collide(DoorRect))
                 {
                     screen = Screen.complete;
                 }
-                if (keyboardState.IsKeyDown(Keys.E))
+                if (keyboardState.IsKeyDown(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 20, BadGuy.Y - 20, BadGuy.Width + 40, BadGuy.Height)))
                 {
                     MJTexture = MJkick;
 
 
-                    if (EnemyRect.X + 5 >= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
-
-                    if (EnemyRect.X - 5 <= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
+                    BadGuy.Dead = true;
 
 
                 }
-                if (keyboardState.IsKeyDown(Keys.Q))
+                if (keyboardState.IsKeyDown(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 20, BadGuy.Y - 20, BadGuy.Width + 40, BadGuy.Height)))
                 {
                     MJTexture = MJArm;
 
-                    if (EnemyRect.X + 30 <= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
-
-                    if (EnemyRect.X - 30 >= MJ.X)
-                    {
-                        EnemyTexture = DeadEnemy;
-
-                    }
+                    BadGuy.Dead = true;
 
                 }
             }
@@ -900,7 +655,7 @@ namespace Michael_Jackson_s_Moonwalker
             {
 
                 _spriteBatch.Draw(Screen3, ClubRect, Color.White);
-                _spriteBatch.Draw(EnemyTexture, EnemyRect, Color.White);
+                BadGuy.Draw(_spriteBatch);
                 MJ.Draw(_spriteBatch);
             }
             else if (screen == Screen.Screen4)
