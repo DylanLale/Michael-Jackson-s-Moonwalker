@@ -58,15 +58,11 @@ namespace Player_Class
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            
             spriteBatch.Draw(_currentTexture, _location, Color.White);
         }
 
         private void Move(KeyboardState keyboardState)
         {
-
-
-
             _location.X += (int)_speed.X;
             _location.Y += (int)_speed.Y;
         }
@@ -84,7 +80,7 @@ namespace Player_Class
 
         public void Update(KeyboardState keyboardState)
         {
-           
+            _speed = new Vector2(0, 0);
 
             if (keyboardState.IsKeyDown(Keys.D))
             {
@@ -110,10 +106,7 @@ namespace Player_Class
                 _currentTexture = _armtexture;
             }
 
-            
-
-
-                Move(keyboardState);
+            Move(keyboardState);
         }
 
         public Boolean Contains(Rectangle item)
