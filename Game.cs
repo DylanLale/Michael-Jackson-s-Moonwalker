@@ -65,8 +65,9 @@ namespace Michael_Jackson_s_Moonwalker
         Texture2D MJWalk2;
         Rectangle ClubRect;
         Rectangle EnemyRect;
-        Rectangle DoorRect; 
-        KeyboardState keyboardState;
+        Rectangle DoorRect;
+        KeyboardState keyboardState, prevKeyboardState;
+
         SoundEffect MJMusic;
         SoundEffect MJOW;
         Rectangle MJRect;
@@ -135,15 +136,18 @@ namespace Michael_Jackson_s_Moonwalker
 
         protected override void Update(GameTime gameTime)
         {
+            MJ.HSpeed = 0;
+            MJ.VSpeed = 0;
+            prevKeyboardState = keyboardState;
             keyboardState = Keyboard.GetState();
             mouseState = Mouse.GetState();
 
            
             
-            if (!songplayed)
+           // if (!songplayed)
             {
-                songplayed = true;
-                MJMusic.Play();
+               // songplayed = true;
+                //MJMusic.Play();
             }
 
             if (screen == Screen.Intro)
@@ -168,27 +172,28 @@ namespace Michael_Jackson_s_Moonwalker
                 }
 
                
-                if (keyboardState.IsKeyDown(Keys.E) && MJ.Collide(new Rectangle(EnemyRect.X - 40, EnemyRect.Y - 40, EnemyRect.Width + 80, EnemyRect.Height)))
+                if (keyboardState.IsKeyDown(Keys.E) && prevKeyboardState.IsKeyUp(Keys.E) && MJ.Collide(new Rectangle(EnemyRect.X - 40, EnemyRect.Y - 40, EnemyRect.Width + 80, EnemyRect.Height)))
                 {
                     MJTexture = MJkick;
                     MJOW.Play();
                     EnemyTexture = DeadEnemy;
-                    
-                    
-
-                   
-
-
-
 
                 }
+                
                 if (keyboardState.IsKeyDown(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
                 {
                     MJTexture = MJArm;
 
                     MJOW.Play();
 
+
                 }
+
+                if (MJ.X <= 20)
+                {
+                    MJ.HSpeed = 0;
+                }
+
             }
             else if (screen == Screen.Screen2)
             {
@@ -312,8 +317,9 @@ namespace Michael_Jackson_s_Moonwalker
                     BadGuy.X = (generator.Next(100, 500));
                     BadGuy.Y = 275;
                     MJ.X = 600;
+                    MJ.Direction = "left";
                 }
-                if (MJ.X >= BadGuy.X && !BadGuy.Dead)
+                else if (MJ.X >= BadGuy.X && !BadGuy.Dead)
                 {
                     screen = Screen.gameover;
                 }

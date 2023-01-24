@@ -16,6 +16,7 @@ namespace Player_Class
         private Texture2D _armtexture;
         private Rectangle _location;
         private Vector2 _speed;
+        private string _direction;
 
         public Player(Texture2D textureLeft, Texture2D textureRight, Texture2D TextureAttack, Texture2D ArmTexture, int x, int y)
         {
@@ -26,7 +27,7 @@ namespace Player_Class
             _currentTexture = textureRight;
             _location = new Rectangle(x, y, 78, 142);
             _speed = new Vector2();
-           
+            _direction = "right";
         }
 
         public float HSpeed
@@ -54,6 +55,11 @@ namespace Player_Class
         }
 
 
+        public string Direction
+        {
+            // get { return _direction; }
+            set { _direction = value; }
+        }
 
 
         public void Draw(SpriteBatch spriteBatch)
@@ -65,6 +71,14 @@ namespace Player_Class
         {
             _location.X += (int)_speed.X;
             _location.Y += (int)_speed.Y;
+
+            if (_direction == "right" && _location.X < 0)
+                UndoMove();
+
+            else if (_direction == "left" && _location.Right > 800)
+                UndoMove();
+                
+
         }
 
         public void UndoMove()
@@ -93,6 +107,7 @@ namespace Player_Class
                 _currentTexture = _leftTexture;
                 _speed.X =  -5;
 
+                
             }
 
             else if (keyboardState.IsKeyDown(Keys.E))
@@ -104,6 +119,7 @@ namespace Player_Class
             else if (keyboardState.IsKeyDown(Keys.Q))
             {
                 _currentTexture = _armtexture;
+                
             }
 
             Move(keyboardState);
