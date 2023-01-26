@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using Player_Class;
 using System;
 using System.Runtime.CompilerServices;
@@ -67,7 +68,6 @@ namespace Michael_Jackson_s_Moonwalker
         Rectangle EnemyRect;
         Rectangle DoorRect;
         KeyboardState keyboardState, prevKeyboardState;
-
         SoundEffect MJMusic;
         SoundEffect MJPOW;
         Rectangle MJRect;
@@ -97,7 +97,7 @@ namespace Michael_Jackson_s_Moonwalker
 
 
             base.Initialize();
-            MJ = new Player(MJWalkLeft, MJWalkRight, MJkick, MJArm, 52, 300);
+            MJ = new Player(MJWalkRight, MJWalkLeft, MJkick, MJArm, 52, 300);
             BadGuy = new Enemy(EnemyDefault, EnemyPunch, DeadEnemy, generator.Next(100, 600), 300);
           
 
@@ -144,18 +144,25 @@ namespace Michael_Jackson_s_Moonwalker
 
            
             
-            if (!songplayed)
-            {
-                songplayed = true;
-                MJMusic.Play();
-            }
+            
 
             if (screen == Screen.Intro)
             {
+               
                 if (mouseState.LeftButton == ButtonState.Pressed)
                     screen = Screen.Screen1;
+                    
 
 
+            }
+            if (screen != Screen.Intro)
+            {
+                MediaPlayer.Pause();
+            }
+            if (!songplayed && screen != Screen.Intro)
+            {
+                songplayed = true;
+                MJMusic.Play();
             }
             else if (screen == Screen.Screen1)
             {

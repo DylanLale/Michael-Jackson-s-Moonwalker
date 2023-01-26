@@ -73,11 +73,11 @@
 /processorParam:TextureFormat=Color
 /build:MJ Moonwalker.jpg
 
-#begin MJ POW.ogg
-/importer:OggImporter
-/processor:SongProcessor
+#begin MJ POW.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
 /processorParam:Quality=Best
-/build:MJ POW.ogg
+/build:MJ POW.wav
 
 #begin MJarm.png
 /importer:TextureImporter
