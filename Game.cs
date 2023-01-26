@@ -63,7 +63,6 @@ namespace Michael_Jackson_s_Moonwalker
         Texture2D MJWalkLeft;
         Texture2D GameOverTexture;
         Texture2D LevelComplete;
-        Texture2D MJWalk2;
         Rectangle ClubRect;
         Rectangle EnemyRect;
         Rectangle DoorRect;
@@ -109,7 +108,6 @@ namespace Michael_Jackson_s_Moonwalker
             TitleScreen = Content.Load<Texture2D>("MJ Moonwalker");
             MJWalkRight = Content.Load<Texture2D>("MJWalk1");
             MJWalkLeft = Content.Load<Texture2D>("MJWalkLeft");
-            MJWalk2 = Content.Load<Texture2D>("MJWalk2");
             MJMusic = Content.Load<SoundEffect>("Moonwalker Music");
             MJPOW = Content.Load<SoundEffect>("MJ POW");
             MJArm = Content.Load<Texture2D>("MJArm");
