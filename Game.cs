@@ -180,7 +180,7 @@ namespace Michael_Jackson_s_Moonwalker
 
                 }
                 
-                if (keyboardState.IsKeyDown(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
+                if (keyboardState.IsKeyDown(Keys.Q) && prevKeyboardState.IsKeyUp(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
                 {
                     MJTexture = MJArm;
 
@@ -209,7 +209,7 @@ namespace Michael_Jackson_s_Moonwalker
                 }
 
                
-                if (keyboardState.IsKeyDown(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
+                if (keyboardState.IsKeyDown(Keys.E) && prevKeyboardState.IsKeyUp(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
                 {
                     MJTexture = MJkick;
                     MJOW.Play();
@@ -217,7 +217,7 @@ namespace Michael_Jackson_s_Moonwalker
 
 
                 }
-                if (keyboardState.IsKeyDown(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
+                if (keyboardState.IsKeyDown(Keys.Q) && prevKeyboardState.IsKeyUp(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
                 {
                     MJTexture = MJArm;
                     MJOW.Play();
@@ -247,7 +247,7 @@ namespace Michael_Jackson_s_Moonwalker
                     screen = Screen.gameover;
                 }
 
-                if (keyboardState.IsKeyDown(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 20, BadGuy.Y - 20, BadGuy.Width + 40, BadGuy.Height)))
+                if (keyboardState.IsKeyDown(Keys.E) && prevKeyboardState.IsKeyUp(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 20, BadGuy.Y - 20, BadGuy.Width + 40, BadGuy.Height)))
                 {
                     MJTexture = MJkick;
                     MJOW.Play();
@@ -261,7 +261,7 @@ namespace Michael_Jackson_s_Moonwalker
 
 
                 }
-                if (keyboardState.IsKeyDown(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 20, BadGuy.Y - 20, BadGuy.Width + 40, BadGuy.Height)))
+                if (keyboardState.IsKeyDown(Keys.Q) && prevKeyboardState.IsKeyUp(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 20, BadGuy.Y - 20, BadGuy.Width + 40, BadGuy.Height)))
                 {
                     MJTexture = MJArm;
                     MJOW.Play();
@@ -287,7 +287,7 @@ namespace Michael_Jackson_s_Moonwalker
                 {
                     screen = Screen.gameover;
                 }
-                if (keyboardState.IsKeyDown(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
+                if (keyboardState.IsKeyDown(Keys.E) && prevKeyboardState.IsKeyUp(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
                 {
                     MJTexture = MJkick;
                     MJOW.Play();
@@ -296,7 +296,7 @@ namespace Michael_Jackson_s_Moonwalker
 
 
                 }
-                if (keyboardState.IsKeyDown(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
+                if (keyboardState.IsKeyDown(Keys.Q) && prevKeyboardState.IsKeyUp(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
                 {
                     MJTexture = MJArm;
                     MJOW.Play();
@@ -323,7 +323,7 @@ namespace Michael_Jackson_s_Moonwalker
                 {
                     screen = Screen.gameover;
                 }
-                if (keyboardState.IsKeyDown(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
+                if (keyboardState.IsKeyDown(Keys.E) && prevKeyboardState.IsKeyUp(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
                 {
                     MJTexture = MJkick;
                     MJOW.Play();
@@ -331,7 +331,7 @@ namespace Michael_Jackson_s_Moonwalker
                     BadGuy.Dead = true;
 
                 }
-                if (keyboardState.IsKeyDown(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
+                if (keyboardState.IsKeyDown(Keys.Q) && prevKeyboardState.IsKeyUp(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
                 {
                     MJTexture = MJArm;
                     MJOW.Play();
@@ -357,7 +357,7 @@ namespace Michael_Jackson_s_Moonwalker
                 {
                     screen = Screen.gameover;
                 }
-                if (keyboardState.IsKeyDown(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
+                if (keyboardState.IsKeyDown(Keys.E) && prevKeyboardState.IsKeyUp(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
                 {
                     MJTexture = MJkick;
                     MJOW.Play();
@@ -367,7 +367,7 @@ namespace Michael_Jackson_s_Moonwalker
 
 
                 }
-                if (keyboardState.IsKeyDown(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
+                if (keyboardState.IsKeyDown(Keys.Q) && prevKeyboardState.IsKeyUp(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
                 {
                     MJTexture = MJArm;
                     MJOW.Play();
@@ -393,7 +393,7 @@ namespace Michael_Jackson_s_Moonwalker
                 {
                     screen = Screen.gameover;
                 }
-                if (keyboardState.IsKeyDown(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
+                if (keyboardState.IsKeyDown(Keys.E) && prevKeyboardState.IsKeyUp(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
                 {
                     MJTexture = MJkick;
                     MJOW.Play();
@@ -404,7 +404,7 @@ namespace Michael_Jackson_s_Moonwalker
 
 
                 }
-                if (keyboardState.IsKeyDown(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
+                if (keyboardState.IsKeyDown(Keys.Q) && prevKeyboardState.IsKeyUp(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
                 {
                     MJTexture = MJArm;
                     MJOW.Play();
@@ -431,7 +431,7 @@ namespace Michael_Jackson_s_Moonwalker
                 {
                     screen = Screen.gameover;
                 }
-                if (keyboardState.IsKeyDown(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
+                if (keyboardState.IsKeyDown(Keys.E) && prevKeyboardState.IsKeyUp(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
                 {
                     MJTexture = MJkick;
 
@@ -442,7 +442,7 @@ namespace Michael_Jackson_s_Moonwalker
 
 
                 }
-                if (keyboardState.IsKeyDown(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
+                if (keyboardState.IsKeyDown(Keys.Q) && prevKeyboardState.IsKeyUp(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
                 {
                     MJTexture = MJArm;
                     MJOW.Play();
@@ -469,14 +469,14 @@ namespace Michael_Jackson_s_Moonwalker
                 {
                     screen = Screen.gameover;
                 }
-                if (keyboardState.IsKeyDown(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
+                if (keyboardState.IsKeyDown(Keys.E) && prevKeyboardState.IsKeyUp(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
                 {
                     MJTexture = MJkick;
                     MJOW.Play();
 
                     BadGuy.Dead = true;
 
-                    if (keyboardState.IsKeyDown(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 20, BadGuy.Y - 20, BadGuy.Width + 40, BadGuy.Height)))
+                    if (keyboardState.IsKeyDown(Keys.Q) && prevKeyboardState.IsKeyUp(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 20, BadGuy.Y - 20, BadGuy.Width + 40, BadGuy.Height)))
                     {
                         MJTexture = MJArm;
                         MJOW.Play();
@@ -510,13 +510,13 @@ namespace Michael_Jackson_s_Moonwalker
                 {
                     screen = Screen.gameover;
                 }
-                if (keyboardState.IsKeyDown(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
+                if (keyboardState.IsKeyDown(Keys.E) && prevKeyboardState.IsKeyUp(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
                 {
                     MJTexture = MJkick;
                     MJOW.Play();
                     BadGuy.Dead = true;
                 }
-                if (keyboardState.IsKeyDown(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
+                if (keyboardState.IsKeyDown(Keys.Q) && prevKeyboardState.IsKeyUp(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
                 {
                     MJTexture = MJArm;
                     MJOW.Play();
@@ -543,7 +543,7 @@ namespace Michael_Jackson_s_Moonwalker
                 {
                     screen = Screen.gameover;
                 }
-                if (keyboardState.IsKeyDown(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
+                if (keyboardState.IsKeyDown(Keys.E) && prevKeyboardState.IsKeyUp(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
                 {
                     MJTexture = MJkick;
 
@@ -555,7 +555,7 @@ namespace Michael_Jackson_s_Moonwalker
 
 
                 }
-                if (keyboardState.IsKeyDown(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
+                if (keyboardState.IsKeyDown(Keys.Q) && prevKeyboardState.IsKeyUp(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
                 {
                     MJTexture = MJArm;
                     MJOW.Play();
@@ -581,7 +581,7 @@ namespace Michael_Jackson_s_Moonwalker
                 {
                     screen = Screen.complete;
                 }
-                if (keyboardState.IsKeyDown(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
+                if (keyboardState.IsKeyDown(Keys.E) && prevKeyboardState.IsKeyUp(Keys.E) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
                 {
                     MJTexture = MJkick;
 
@@ -590,7 +590,7 @@ namespace Michael_Jackson_s_Moonwalker
 
 
                 }
-                if (keyboardState.IsKeyDown(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
+                if (keyboardState.IsKeyDown(Keys.Q) && prevKeyboardState.IsKeyUp(Keys.Q) && MJ.Collide(new Rectangle(BadGuy.X - 40, BadGuy.Y - 40, BadGuy.Width + 80, BadGuy.Height)))
                 {
                     MJTexture = MJArm;
                     MJOW.Play();
