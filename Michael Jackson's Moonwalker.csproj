@@ -11,6 +11,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Content\end game screen.png" />
     <None Remove="Content\MJ Beat It Title Music.mp3" />
     <None Remove="Content\MJ OW.wav" />
     <None Remove="Content\MJ POW.ogg" />

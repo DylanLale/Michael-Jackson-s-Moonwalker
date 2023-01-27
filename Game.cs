@@ -711,7 +711,7 @@ namespace Michael_Jackson_s_Moonwalker
             {
 
                 _spriteBatch.Draw(upstairsScreen6, ClubRect, Color.White);
-                _spriteBatch.Draw(EnemyTexture, EnemyRect, Color.White);
+                BadGuy.Draw(_spriteBatch);
                 MJ.Draw(_spriteBatch);
             }
             else if (screen == Screen.UpstairsScreen7)
